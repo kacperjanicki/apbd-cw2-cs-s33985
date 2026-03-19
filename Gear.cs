@@ -4,7 +4,7 @@ public class Gear
 {
     public static List<Gear> all_equipment = new List<Gear>();
     public int id;
-    private Status current_status;
+    public Status current_status { get; set; }
 
     public Gear()
     {
@@ -22,7 +22,6 @@ public class Gear
         }
         
         current_status = new_status;
-        Console.WriteLine("status changed");
     }
 
     public override string ToString()
