@@ -54,6 +54,10 @@ public class Laptop : Gear
         this.screenSize = screenSize;
         this.ramGB = ram;
     }
+    public override string ToString()
+    {
+        return base.ToString() + $" // screen: {screenSize}\", ram: {ramGB}GB";
+    }
 }
 
 public class Projector : Gear
@@ -67,6 +71,10 @@ public class Projector : Gear
         this.maxResolution = resolution;
         this.portsCount = ports;
     }
+    public override string ToString()
+    {
+        return base.ToString() + $" // resolution: {maxResolution}, ports: {portsCount}";
+    }
 }
 
 public class Camera : Gear
@@ -79,5 +87,9 @@ public class Camera : Gear
     {
         this.brand = brand;
         this.lensSpec = lens;
+    }
+    public override string ToString()
+    {
+        return base.ToString() + $" // brand: {brand}, lens: {lensSpec}";
     }
 }

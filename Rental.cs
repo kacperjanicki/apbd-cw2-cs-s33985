@@ -21,16 +21,16 @@ public class Rental
     {
         if (gear.current_status == Status.RENTED)
         {
-            Console.WriteLine($"=> {gear.GetType().Name} id: {gear.id} is already being rented by someone else.");
+            Console.WriteLine($"ERROR => {gear.GetType().Name} id: {gear.id} is already being rented by someone else.");
             return;
         } else if (gear.current_status == Status.NOT_AVAILABLE)
         {
-            Console.WriteLine($"=> {gear.GetType().Name} id: {gear.id} is currently not available for rental.");
+            Console.WriteLine($"ERROR => {gear.GetType().Name} id: {gear.id} is currently not available for rental.");
             return;
         }
         if (borrower.maxRentals == all_rentals.Count(r => r.borrower == borrower))
         {
-            Console.WriteLine($"=> Limit of rentals for your role is {borrower.maxRentals}, you are trying to exceed it. Try returning some gear.");
+            Console.WriteLine($"ERROR => Limit of rentals for your role is {borrower.maxRentals}, you are trying to exceed it. Try returning some gear.");
             return;
         }
         this.id = all_rentals.Count + 1;
