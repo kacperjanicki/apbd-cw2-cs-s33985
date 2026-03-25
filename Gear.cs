@@ -26,9 +26,9 @@ public class Gear
         current_status = new_status;
     }
 
-    public static void displayAllGear(bool showOnlyAvailable = false)
+    public static void displayAllGear(bool showOnlyAvailable = false, bool showMessage = true)
     {
-        Console.WriteLine("--------------DISPLAYING AVAILABLE GEAR IN OUR STORAGE--------------");
+        if(showMessage) Console.WriteLine("--------------DISPLAYING AVAILABLE GEAR IN OUR STORAGE--------------");
         foreach (var eq in all_equipment)
         {
             if (showOnlyAvailable && eq.current_status != Status.IN_STOCK) continue;

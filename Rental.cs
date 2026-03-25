@@ -44,6 +44,24 @@ public class Rental
         all_rentals.Add(this);
     }
 
+    public static void Rent(Gear gear, Person borrower, DateTime? rentalDate = null)
+    {
+        new Rental(gear, borrower, rentalDate);
+    }
+    public static void Return(Gear gear)
+    {
+        var rental = all_rentals.FirstOrDefault(r => r.gearRented == gear);
+
+        if (rental != null)
+        {
+            rental.returnGear();
+        }
+        else
+        {
+            Console.WriteLine("This gear is not currently rented.");
+        }
+    }
+
     public void returnGear()
     {
         Console.WriteLine($"--------------RETURNING: {gearRented}--------------");
@@ -51,7 +69,7 @@ public class Rental
         if (fine > 0.0)
         {
             borrower.fineAmount += fine;
-            Console.WriteLine($"${fine} fine has been applied to {borrower}, now he has to pay off {borrower.fineAmount} total.");
+            Console.WriteLine($"=> ${fine} fine has been applied to {borrower}, now he has to pay off {borrower.fineAmount} total.");
         }
         else
         {
@@ -63,7 +81,15 @@ public class Rental
 
     public static void showUserRentals(Person p)
     {
-        Console.WriteLine($"--------------DISPLAYING ALL RENTALS OF: {p.firstName} {p.lastName}--------------");
+        int rental_count = all_rentals.Count(r => r.borrower == p);
+        if (rental_count > 0)
+        {
+            Console.WriteLine($"--------------DISPLAYING ALL RENTALS OF: {p.firstName} {p.lastName}--------------");
+        }
+        else
+        {
+            Console.WriteLine($"{p.firstName} {p.lastName} is not renting any items at the moment.");
+        }
         foreach (var rental in all_rentals)
         {
             if (rental.borrower == p)
