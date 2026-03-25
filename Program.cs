@@ -20,8 +20,6 @@ public class Program
         {
             Rental.showUserRentals(p);
         }
-        
-        
 
     }
     public static void Main()
@@ -38,37 +36,30 @@ public class Program
         
         // 3. Wyświetlenie listy całego sprzętu z aktualnym statusem
         Gear.displayAllGear();
+        
         // 4. Wyświetlenie wyłącznie sprzętu dostępnego do wypożyczenia.
         Gear.displayAllGear(showOnlyAvailable: true);
         
         // 5. Wypożyczenie sprzętu użytkownikowi.
         Rental.Rent(gear: laptop1,borrower: jack, rentalDate: new DateTime(2026,01,01));
-        Rental.Rent(gear: laptop1, borrower: adam); // sprzęt jest już w wypożyczeniu więc nie zostanie wypożyczony
+        Rental.Rent(gear: laptop1, borrower: adam); // Sprzęt jest już w wypożyczeniu więc nie zostanie wypożyczony
         Rental.Rent(gear: camera1, borrower: adam, rentalDate: new DateTime(2026, 03, 22)); 
         Rental.Rent(gear: camera2, borrower: adam, rentalDate: new DateTime(2026, 03, 19)); 
         Rental.Rent(gear: projector1, borrower: jack); // Jeżeli sprzęt ma status niedostępny - nie można go wypożyczyć 
         
         // 6. Zwrot sprzętu wraz z przeliczeniem ewentualnej kary za opóźnienie
-        Rental.Return(laptop1);
+        Rental.Return(camera2);
+        
+        // 7. Oznaczenie sprzętu jako niedostępnego, np. z powodu uszkodzenia lub serwisu
+        laptop1.change_status(Status.NOT_AVAILABLE);
         
         // 8. Wyświetlenie aktualnych wypożyczeń danego użytkownika
         Rental.showUserRentals(p: adam);
-
-        //
-        // Rental r2 = new Rental(gear: l,borrower:s); // -> won't be added cause gear: l is already being rented
-        // Console.WriteLine(Rental.all_rentals.Count);
-        //
-        //
-        // foreach (var VARIABLE in Person.all_people)
-        // {
-        //     Console.WriteLine(VARIABLE);
-        // }
-
-        // foreach (var VARIABLE in Gear.all_equipment)
-        // {
-        //     Console.WriteLine(VARIABLE);
-        // }
         
-        generateRaport();
+        // 9. Wyświetlenie listy przeterminowanych wypożyczeń
+        Rental.showDueRentals();
+        
+        // 10. Wygenerowanie krótkiego raportu podsumowującego stan wypożyczalni
+        // generateRaport();
     }
 }

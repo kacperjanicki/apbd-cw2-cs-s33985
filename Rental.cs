@@ -58,13 +58,13 @@ public class Rental
         }
         else
         {
-            Console.WriteLine("This gear is not currently rented.");
+            Console.WriteLine("=> This gear is not currently rented.");
         }
     }
 
     public void returnGear()
     {
-        Console.WriteLine($"--------------RETURNING: {gearRented}--------------");
+        Console.WriteLine($"--------------RETURNING: {gearRented} rented by: {borrower.firstName} {borrower.lastName}--------------");
         double fine = FineMonitoring.calculateFine(dueTime: dueDate);
         if (fine > 0.0)
         {
@@ -77,6 +77,18 @@ public class Rental
         }
         gearRented.change_status(Status.IN_STOCK);
         all_rentals.Remove(this);
+    }
+
+    public static void showDueRentals()
+    {
+        Console.WriteLine($"--------------DISPLAYING ALL DUE RENTALS--------------");
+        foreach (var rental in all_rentals)
+        {
+            if (DateTime.Now > rental.dueDate)
+            {
+                Console.WriteLine(rental);
+            }
+        }
     }
 
     public static void showUserRentals(Person p)
