@@ -3,7 +3,8 @@
 public enum Status
 {
     IN_STOCK,
-    RENTED
+    RENTED,
+    NOT_AVAILABLE
 }
 
 public class Rental
@@ -20,7 +21,11 @@ public class Rental
     {
         if (gear.current_status == Status.RENTED)
         {
-            Console.WriteLine($"{gear.GetType().Name} id: {gear.id} is already being rented by someone else.");
+            Console.WriteLine($"=> {gear.GetType().Name} id: {gear.id} is already being rented by someone else.");
+            return;
+        } else if (gear.current_status == Status.NOT_AVAILABLE)
+        {
+            Console.WriteLine($"=> {gear.GetType().Name} id: {gear.id} is currently not available for rental.");
             return;
         }
         this.id = all_rentals.Count + 1;
@@ -38,13 +43,32 @@ public class Rental
 
     public void returnGear()
     {
-        
+        double fine = FineMonitoring.calculateFine(dueTime:DueDate);
+        Console.WriteLine(fine);
+    }
+
+    public static void showUserRentals(Person p)
+    {
+        Console.WriteLine($"--------------DISPLAYING ALL RENTALS OF: {p.firstName} {p.lastName}--------------");
+        foreach (var rental in all_rentals)
+        {
+            if (rental.Borrower == p)
+            {
+                Console.WriteLine(rental);            
+            }
+        }
     }
 
     public override string ToString()
     {
+        string dueInfo = "";
+        if (DateTime.Now > DueDate)
+        {
+            dueInfo = "DUE: ";
+        }
+        
         return
-            $"{GearRented.GetType().Name} id: {GearRented.id} was rented by {Borrower.firstName} {Borrower.lastName} on {RentalDate.ToShortDateString()} and is due to be returned on {DueDate.ToShortDateString()}";
+            $"{dueInfo}{GearRented.GetType().Name} id: {GearRented.id} was rented by {Borrower.firstName} {Borrower.lastName} on {RentalDate.ToShortDateString()} and is due to be returned on {DueDate.ToShortDateString()}";
     }
 
 }
