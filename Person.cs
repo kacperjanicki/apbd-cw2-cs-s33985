@@ -8,7 +8,6 @@ public class Person
     public string lastName;
     public double fineAmount { get; set; }
     public virtual int maxRentals => 0;
-    
 
     public Person()
     {

@@ -69,7 +69,7 @@ public class Rental
         if (fine > 0.0)
         {
             borrower.fineAmount += fine;
-            Console.WriteLine($"=> ${fine} fine has been applied to {borrower}, now he has to pay off {borrower.fineAmount} total.");
+            Console.WriteLine($"=> ${fine} fine has been applied to {borrower}, now he has to pay off ${borrower.fineAmount} in total.");
         }
         else
         {

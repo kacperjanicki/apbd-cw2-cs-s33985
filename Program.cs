@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using apbd_cw2_cs_s33985;
+﻿using apbd_cw2_cs_s33985;
 
 public class Program
 {
