@@ -15,12 +15,8 @@ public class FineMonitoring
             int days = (int)diff.TotalDays;
 
             totalFine = days * finePerDay;
-            Console.WriteLine($"Due time passed {days} days ago, total fine is: {totalFine}.");
+            // Console.WriteLine($"Due time passed {days} days ago, total fine is: {totalFine}.");
             
-        }
-        else
-        {
-            Console.WriteLine("Due time has not passed yet, no fine yet.");
         }
 
         return totalFine;

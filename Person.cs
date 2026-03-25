@@ -7,6 +7,8 @@ public class Person
     public string firstName;
     public string lastName;
     public double fineAmount { get; set; }
+    public virtual int maxRentals => 0;
+    
 
     public Person()
     {
@@ -29,6 +31,7 @@ public class Person
 
 public class Student : Person
 {
+    public override int maxRentals => 2;
     public Student(string firstName, string lastName) : base(firstName, lastName)
     {
     }
@@ -41,6 +44,7 @@ public class Student : Person
 
 public class Employee : Person
 {
+    public override int maxRentals => 5;
     public Employee(string firstName, string lastName) : base(firstName, lastName)
     {
     }

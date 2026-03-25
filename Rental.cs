@@ -11,11 +11,11 @@ public class Rental
 {
     public int id { get; set;}
     public static List<Rental> all_rentals = new List<Rental>();
-    public DateTime RentalDate { get; set; }
-    public DateTime DueDate { get; set; }
-    public DateTime? ReturnDate { get; set; }
-    public Gear GearRented { get; set; }
-    public Person Borrower { get; set; }
+    public DateTime rentalDate { get; set; }
+    public DateTime dueDate { get; set; }
+    public DateTime? returnDate { get; set; }
+    public Gear gearRented { get; set; }
+    public Person borrower { get; set; }
 
     public Rental(Gear gear, Person borrower, DateTime? rentalDate = null)
     {
@@ -28,14 +28,17 @@ public class Rental
             Console.WriteLine($"=> {gear.GetType().Name} id: {gear.id} is currently not available for rental.");
             return;
         }
+        if (borrower.maxRentals == all_rentals.Count(r => r.borrower == borrower))
+        {
+            Console.WriteLine($"=> Limit of rentals for your role is {borrower.maxRentals}, you are trying to exceed it. Try returning some gear.");
+            return;
+        }
         this.id = all_rentals.Count + 1;
-        this.RentalDate = rentalDate ?? DateTime.Now;
-        this.DueDate = RentalDate.AddMonths(1);
-        this.ReturnDate = null;
-        this.GearRented = gear;
-        this.Borrower = borrower;
-
-
+        this.rentalDate = rentalDate ?? DateTime.Now;
+        this.dueDate = this.rentalDate.AddMonths(1);
+        this.returnDate = null;
+        this.gearRented = gear;
+        this.borrower = borrower;
         
         gear.change_status(Status.RENTED);
         all_rentals.Add(this);
@@ -43,8 +46,19 @@ public class Rental
 
     public void returnGear()
     {
-        double fine = FineMonitoring.calculateFine(dueTime:DueDate);
-        Console.WriteLine(fine);
+        Console.WriteLine($"--------------RETURNING: {gearRented}--------------");
+        double fine = FineMonitoring.calculateFine(dueTime: dueDate);
+        if (fine > 0.0)
+        {
+            borrower.fineAmount += fine;
+            Console.WriteLine($"${fine} fine has been applied to {borrower}, now he has to pay off {borrower.fineAmount} total.");
+        }
+        else
+        {
+            Console.WriteLine("No fine was issued, gear returned succesfully.");
+        }
+        gearRented.change_status(Status.IN_STOCK);
+        all_rentals.Remove(this);
     }
 
     public static void showUserRentals(Person p)
@@ -52,7 +66,7 @@ public class Rental
         Console.WriteLine($"--------------DISPLAYING ALL RENTALS OF: {p.firstName} {p.lastName}--------------");
         foreach (var rental in all_rentals)
         {
-            if (rental.Borrower == p)
+            if (rental.borrower == p)
             {
                 Console.WriteLine(rental);            
             }
@@ -62,13 +76,12 @@ public class Rental
     public override string ToString()
     {
         string dueInfo = "";
-        if (DateTime.Now > DueDate)
+        if (DateTime.Now > dueDate)
         {
             dueInfo = "DUE: ";
         }
-        
         return
-            $"{dueInfo}{GearRented.GetType().Name} id: {GearRented.id} was rented by {Borrower.firstName} {Borrower.lastName} on {RentalDate.ToShortDateString()} and is due to be returned on {DueDate.ToShortDateString()}";
+            $"{dueInfo}{gearRented.GetType().Name} id: {gearRented.id} was rented by {borrower.firstName} {borrower.lastName} on {rentalDate.ToShortDateString()} and is due to be returned on {dueDate.ToShortDateString()}";
     }
 
 }

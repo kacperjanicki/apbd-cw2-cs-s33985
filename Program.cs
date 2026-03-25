@@ -14,6 +14,7 @@ public class Program
         Gear laptop1 = new Laptop(price: 2500, screenSize: 17.7, ram: 16);
         Gear projector1 = new Projector(price: 5000, resolution: "1920x1080", 3, status: Status.NOT_AVAILABLE);
         Gear camera1 = new Camera(price: 8500, brand: "Canon", "18mm");
+        Gear camera2 = new Camera(price: 5000, brand: "Sony", "21mm");
         
         // 3. Wyświetlenie listy całego sprzętu z aktualnym statusem
         Gear.displayAllGear();
@@ -21,15 +22,16 @@ public class Program
         Rental r1 = new Rental(gear: laptop1,borrower: jack, rentalDate: new DateTime(2026,01,01));
         Rental r2 = new Rental(gear: laptop1, borrower: adam); // sprzęt jest już w wypożyczeniu więc nie zostanie wypożyczony
         Rental r3 = new Rental(gear: camera1, borrower: adam, rentalDate: new DateTime(2026, 03, 22)); 
-        // Jeżeli sprzęt ma status niedostępny - nie można go wypożyczyć
-        Rental r4 = new Rental(gear: projector1, borrower: jack);
+        Rental r4 = new Rental(gear: camera2, borrower: adam, rentalDate: new DateTime(2026, 03, 19)); 
+        Rental r5 = new Rental(gear: projector1, borrower: jack); // Jeżeli sprzęt ma status niedostępny - nie można go wypożyczyć 
         
         // 6. Zwrot sprzętu wraz z przeliczeniem ewentualnej kary za opóźnienie
-        r3.returnGear();
+        r1.returnGear();
         
-                
         // 8. Wyświetlenie aktualnych wypożyczeń danego użytkownika
-        // Rental.showUserRentals(p: adam);
+        Rental.showUserRentals(p: adam);
+
+        Rental r6 = new Rental(gear: laptop1, borrower: adam);
 
         //
         // Rental r2 = new Rental(gear: l,borrower:s); // -> won't be added cause gear: l is already being rented
